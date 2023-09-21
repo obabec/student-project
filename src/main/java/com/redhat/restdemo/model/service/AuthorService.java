@@ -5,8 +5,10 @@ import com.redhat.restdemo.model.entity.Author;
 import java.util.Optional;
 
 public interface AuthorService {
-    Optional<Author> findAuthorById(int integer);
     Iterable<Author> findAll();
-
+    Optional<Author> findAuthorById(Integer id);
     Author addAuthor(Author author);
+    Author updateAuthor(Integer id, Author author);
+    Iterable<Author> findAuthorsByBook(Integer id);
+    Author deleteAuthor(Integer id);
 }

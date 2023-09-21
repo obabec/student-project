@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 /**
  * This is a short example of mapping class that should be completed by all other attributes.
@@ -25,18 +26,43 @@ public class Author {
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "SERIAL")
-    int id;
+    Integer id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "year_of_birth")
+    private Integer yearOfBirth;
 
     public Author(Author author) {
         name = author.getName();
         surname = author.getSurname();
+        yearOfBirth = author.getYearOfBirth();
     }
 
-    public Author(String name, String surname) {
+    /*
+     * Two objects are considered equal if all their attributes (except ids) are the same
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(name, author.name) && Objects.equals(surname, author.surname) && Objects.equals(yearOfBirth, author.yearOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, yearOfBirth);
+    }
+
+
+    public Author(String name, String surname, Integer yearOfBirth) {
         this.name = name;
         this.surname = surname;
+        this.yearOfBirth = yearOfBirth;
     }
 }
